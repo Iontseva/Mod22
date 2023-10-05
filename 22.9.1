@@ -1,0 +1,36 @@
+s = "2 16 222  33 150  340 41 8 77 55 93 87 15987"
+
+subs_list = list(map(int, s.split()))
+
+def sort(z):
+    for i in range(1, len(z)):
+        x = z[i]
+        idx = i
+        while idx > 0 and z[idx - 1] > x:
+            z[idx] = z[idx - 1]
+            idx -= 1
+        z[idx] = x
+    return z
+
+subs_sort = sort(subs_list)
+
+number = int(input("Введите число: "))
+
+
+def pos(subs_sort, number, left, right):
+    if number > subs_sort[-1] or number < subs_sort[0]:
+        return "Введённое число вне допустимого диапазона"
+
+    if left > right:
+        return False
+
+    middle = (right + left) // 2
+    if subs_sort[middle] < number <= subs_sort[middle+1]:
+        return middle
+    elif number < subs_sort[middle]:
+
+        return pos(subs_sort, number, left, middle - 1)
+    else:
+        return pos(subs_sort, number, middle + 1, right)
+
+print("Позиция для данного числа: ", pos(subs_sort, number, 0, len(subs_sort)))
